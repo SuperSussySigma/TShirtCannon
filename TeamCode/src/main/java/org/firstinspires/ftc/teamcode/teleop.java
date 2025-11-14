@@ -67,7 +67,7 @@ public class teleop extends OpMode
      */
     @Override
     public void init() {
-        telemetry.addData("Status", "Initialized");
+        telemetry.addData("Status", "Initializing");
 
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
@@ -85,8 +85,11 @@ public class teleop extends OpMode
         rightfront.setDirection(DcMotor.Direction.FORWARD);
         rightback.setDirection(DcMotor.Direction.FORWARD);
 
+        stateMachines = new StateMachines(this);
+
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
+        telemetry.update();
     }
 
     /*
@@ -109,6 +112,7 @@ public class teleop extends OpMode
      */
     @Override
     public void loop() {
+        stateMachines.run();
         // Setup a variable for each drive wheel to save power level for telemetry
         double leftPower;
         double rightPower;
@@ -130,13 +134,18 @@ public class teleop extends OpMode
 
         // Send calculated power to wheels
         leftFront.setPower(leftPower);
-        leftFront.setPower(leftPower);
+        leftback.setPower(leftPower);
         rightfront.setPower(rightPower);
         rightback.setPower(rightPower);
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
+        telemetry.addData("Launch State", stateMachines.launchState);
+        telemetry.addData("Load State", stateMachines.loadState);
+        telemetry.addData("Drive State", stateMachines.driveState);
+        telemetry.addData("Aim State", stateMachines.aimState);
+        telemetry.update();
     }
 
     /*
