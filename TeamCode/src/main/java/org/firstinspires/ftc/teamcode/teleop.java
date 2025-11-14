@@ -59,6 +59,7 @@ public class teleop extends OpMode
     private DcMotor leftback = null;
     private DcMotor rightfront = null;
     private DcMotor rightback = null;
+    public StateMachines stateMachines;
 
 
     /*
