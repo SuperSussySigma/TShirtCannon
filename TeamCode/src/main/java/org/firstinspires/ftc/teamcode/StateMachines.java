@@ -84,7 +84,7 @@ public class StateMachines {
                 }
                 break;
             case AUTO_AIM:
-                // TOODO: Add auto aim logic
+                // TODO: Add auto aim logic
                 if (teleOp.gamepad1.y) {
                     driveState = DriveState.MANUAL;
                 }
