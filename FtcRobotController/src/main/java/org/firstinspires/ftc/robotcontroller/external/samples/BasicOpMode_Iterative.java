@@ -56,8 +56,10 @@ public class BasicOpMode_Iterative extends OpMode
 {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor leftDrive = null;
-    private DcMotor rightDrive = null;
+    private DcMotor leftfront = null;
+    private DcMotor leftback = null;
+    private DcMotor rightfront = null;
+    private DcMotor rightback = null;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -69,14 +71,18 @@ public class BasicOpMode_Iterative extends OpMode
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
-        rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
+        leftfront  = hardwareMap.get(DcMotor.class, "left_front");
+        leftback  = hardwareMap.get(DcMotor.class, "left_back");
+        rightfront = hardwareMap.get(DcMotor.class, "right_front");
+        rightback = hardwareMap.get(DcMotor.class, "right_back");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
-        leftDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightDrive.setDirection(DcMotor.Direction.FORWARD);
+        leftfront.setDirection(DcMotor.Direction.REVERSE);
+        leftback.setDirection(DcMotor.Direction.REVERSE);
+        rightfront.setDirection(DcMotor.Direction.FORWARD);
+        rightback.setDirection(DcMotor.Direction.FORWARD);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -122,8 +128,10 @@ public class BasicOpMode_Iterative extends OpMode
         // rightPower = -gamepad1.right_stick_y ;
 
         // Send calculated power to wheels
-        leftDrive.setPower(leftPower);
-        rightDrive.setPower(rightPower);
+        leftfront.setPower(leftPower);
+        leftback.setPower(leftPower);
+        rightfront.setPower(rightPower);
+        rightback.setPower(rightPower);
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
