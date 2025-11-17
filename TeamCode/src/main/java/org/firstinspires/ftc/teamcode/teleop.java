@@ -72,7 +72,7 @@ public class teleop extends OpMode
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        leftFront  = hardwareMap.get(DcMotor.class, "leftFront");
+        leftFront  = hardwareMap.get(DcMotor.class, "leftfront");
         leftback = hardwareMap.get(DcMotor.class, "leftback");
         rightback = hardwareMap.get(DcMotor.class, "rightback");
         rightfront = hardwareMap.get(DcMotor.class, "rightfront");
