@@ -71,10 +71,10 @@ public class BasicOpMode_Iterative extends OpMode
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        leftfront  = hardwareMap.get(DcMotor.class, "left_front");
-        leftback  = hardwareMap.get(DcMotor.class, "left_back");
-        rightfront = hardwareMap.get(DcMotor.class, "right_front");
-        rightback = hardwareMap.get(DcMotor.class, "right_back");
+        leftfront  = hardwareMap.get(DcMotor.class, "leftfront");
+        leftback  = hardwareMap.get(DcMotor.class, "leftback");
+        rightfront = hardwareMap.get(DcMotor.class, "rightfront");
+        rightback = hardwareMap.get(DcMotor.class, "rightback");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
