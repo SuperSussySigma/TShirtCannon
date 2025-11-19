@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -59,7 +60,8 @@ public class teleop extends OpMode
     private DcMotor leftback = null;
     private DcMotor rightfront = null;
     private DcMotor rightback = null;
-
+    private DcMotor turret = null;
+    private DcMotor cannon = null;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -75,6 +77,8 @@ public class teleop extends OpMode
         leftback = hardwareMap.get(DcMotor.class, "leftback");
         rightback = hardwareMap.get(DcMotor.class, "rightback");
         rightfront = hardwareMap.get(DcMotor.class, "rightfront");
+        turret = hardwareMap.get(DcMotor.class, "turret");
+        cannon = hardwareMap.get(DcMotor.class, "cannon");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
@@ -83,6 +87,8 @@ public class teleop extends OpMode
         leftback.setDirection(DcMotor.Direction.REVERSE);
         rightfront.setDirection(DcMotor.Direction.FORWARD);
         rightback.setDirection(DcMotor.Direction.FORWARD);
+        turret.setDirection(DcMotor.Direction.FORWARD);
+        turret.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -112,6 +118,22 @@ public class teleop extends OpMode
         double leftPower;
         double rightPower;
 
+        if (gamepad1.right_bumper)
+        {
+            turret.setPower(0.3);
+        }
+        else if (gamepad1.left_bumper)
+        {
+            turret.setPower(-0.3);
+        }
+    if (gamepad1.dpad_up)
+    {
+        cannon.setPower(0.3);
+    }
+    else if (gamepad1.dpad_down)
+    {
+        cannon.setPower(-0.3);
+    }
         // Choose to drive using either Tank Mode, or POV Mode
         // Comment out the method that's not used.  The default below is POV.
 
