@@ -126,6 +126,10 @@ public class teleop extends OpMode
         {
             turret.setPower(-0.3);
         }
+        else
+        {
+            turret.setPower(0);
+        }
     if (gamepad1.dpad_up)
     {
         cannon.setPower(0.3);
@@ -133,6 +137,9 @@ public class teleop extends OpMode
     else if (gamepad1.dpad_down)
     {
         cannon.setPower(-0.3);
+    }
+    else{
+        cannon.setPower(0);
     }
         // Choose to drive using either Tank Mode, or POV Mode
         // Comment out the method that's not used.  The default below is POV.
