@@ -83,10 +83,10 @@ public class teleop extends OpMode
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
-        leftFront.setDirection(DcMotor.Direction.REVERSE);
-        leftback.setDirection(DcMotor.Direction.REVERSE);
-        rightfront.setDirection(DcMotor.Direction.FORWARD);
-        rightback.setDirection(DcMotor.Direction.FORWARD);
+        leftFront.setDirection(DcMotor.Direction.FORWARD);
+        leftback.setDirection(DcMotor.Direction.FORWARD);
+        rightfront.setDirection(DcMotor.Direction.REVERSE);
+        rightback.setDirection(DcMotor.Direction.REVERSE);
         turret.setDirection(DcMotor.Direction.FORWARD);
         turret.setDirection(DcMotorSimple.Direction.FORWARD);
 
@@ -120,11 +120,11 @@ public class teleop extends OpMode
 
         if (gamepad1.right_bumper)
         {
-            turret.setPower(0.3);
+            turret.setPower(-0.3);
         }
         else if (gamepad1.left_bumper)
         {
-            turret.setPower(-0.3);
+            turret.setPower(0.3);
         }
         else
         {
@@ -132,11 +132,11 @@ public class teleop extends OpMode
         }
     if (gamepad1.dpad_up)
     {
-        cannon.setPower(0.3);
+        cannon.setPower(-0.3);
     }
     else if (gamepad1.dpad_down)
     {
-        cannon.setPower(-0.3);
+        cannon.setPower(0.3);
     }
     else{
         cannon.setPower(0);
