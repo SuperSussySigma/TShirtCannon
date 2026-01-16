@@ -62,7 +62,7 @@ public class teleop extends OpMode
     private DcMotor rightback = null;
     private DcMotor turret = null;
     private DcMotor cannon = null;
-
+    private DcMotor valve = null;
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -79,6 +79,7 @@ public class teleop extends OpMode
         rightfront = hardwareMap.get(DcMotor.class, "rightfront");
         turret = hardwareMap.get(DcMotor.class, "turret");
         cannon = hardwareMap.get(DcMotor.class, "cannon");
+        valve = hardwareMap.get(DcMotor.class, "valve");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
@@ -89,7 +90,6 @@ public class teleop extends OpMode
         rightback.setDirection(DcMotor.Direction.REVERSE);
         turret.setDirection(DcMotor.Direction.FORWARD);
         turret.setDirection(DcMotorSimple.Direction.FORWARD);
-
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
     }
@@ -141,6 +141,15 @@ public class teleop extends OpMode
     else{
         cannon.setPower(0);
     }
+
+        if (gamepad1.right_trigger > 0.1)
+        {
+            valve.setPower(1);
+        }
+        else
+        {
+            valve.setPower(0);
+        }
         // Choose to drive using either Tank Mode, or POV Mode
         // Comment out the method that's not used.  The default below is POV.
 
