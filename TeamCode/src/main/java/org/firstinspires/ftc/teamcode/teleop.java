@@ -146,6 +146,10 @@ public class teleop extends OpMode
         {
             valve.setPower(1);
         }
+        else if(gamepad1.left_trigger > 0.1)
+        {
+            valve.setPower(-1);
+        }
         else
         {
             valve.setPower(0);
