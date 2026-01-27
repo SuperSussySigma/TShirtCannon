@@ -15,5 +15,14 @@ public class PController {
 
         return kP * pError;
     }
+    public double getTargetPoint()
+    {
+        return targetPoint;
+    }
+    public void setTargetPoint(double targetPoint)
+    {
+        targetPoint = this.targetPoint;
+
+    }
 
 }

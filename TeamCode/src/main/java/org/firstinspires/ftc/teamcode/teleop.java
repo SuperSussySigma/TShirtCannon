@@ -63,6 +63,11 @@ public class teleop extends OpMode
     private DcMotor turret = null;
     private DcMotor cannon = null;
     private DcMotor valve = null;
+    private double cannonPower;
+    private double cannonPos;
+    private PController pController;
+    private double kP = 0.1;
+    private double cannonTargetPoint = 0;
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -90,6 +95,7 @@ public class teleop extends OpMode
         rightback.setDirection(DcMotor.Direction.REVERSE);
         turret.setDirection(DcMotor.Direction.FORWARD);
         turret.setDirection(DcMotorSimple.Direction.FORWARD);
+        pController = new PController(kP, cannonTargetPoint);
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
     }
@@ -117,6 +123,7 @@ public class teleop extends OpMode
         // Setup a variable for each drive wheel to save power level for telemetry
         double leftPower;
         double rightPower;
+        cannonPos = cannon.getCurrentPosition();
 
         if (gamepad1.right_bumper)
         {
@@ -132,11 +139,13 @@ public class teleop extends OpMode
         }
     if (gamepad1.dpad_up)
     {
-        cannon.setPower(-0.3);
+        cannonTargetPoint += 10;
+        pController.setTargetPoint(cannonTargetPoint);
     }
     else if (gamepad1.dpad_down)
     {
-        cannon.setPower(0.3);
+        cannonTargetPoint -= 10;
+        pController.setTargetPoint(cannonTargetPoint);
     }
     else{
         cannon.setPower(0);
@@ -156,6 +165,7 @@ public class teleop extends OpMode
         }
         // Choose to drive using either Tank Mode, or POV Mode
         // Comment out the method that's not used.  The default below is POV.
+        cannonPower = pController.updatePController(cannonPos);
 
         // POV Mode uses left stick to go forward, and right stick to turn.
         // - This uses basic math to combine motions and is easier to drive straight.
@@ -174,6 +184,7 @@ public class teleop extends OpMode
         leftFront.setPower(leftPower);
         rightfront.setPower(rightPower);
         rightback.setPower(rightPower);
+        cannon.setPower(cannonPower);
         //gkjgkj
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
