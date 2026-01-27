@@ -95,6 +95,12 @@ public class teleop extends OpMode
         rightback.setDirection(DcMotor.Direction.REVERSE);
         turret.setDirection(DcMotor.Direction.FORWARD);
         turret.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftback.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightfront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightback.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        turret.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        cannon.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         pController = new PController(kP, cannonTargetPoint);
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
