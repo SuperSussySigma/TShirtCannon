@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -59,15 +60,15 @@ public class teleop extends OpMode
     private DcMotor leftback = null;
     private DcMotor rightfront = null;
     private DcMotor rightback = null;
-    public StateMachines stateMachines;
-
-
+    private DcMotor turret = null;
+    private DcMotor cannon = null;
+    private DcMotor valve = null;
     /*
      * Code to run ONCE when the driver hits INIT
      */
     @Override
     public void init() {
-        telemetry.addData("Status", "Initializing");
+        telemetry.addData("Status", "Initialized");
 
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
@@ -76,20 +77,21 @@ public class teleop extends OpMode
         leftback = hardwareMap.get(DcMotor.class, "leftback");
         rightback = hardwareMap.get(DcMotor.class, "rightback");
         rightfront = hardwareMap.get(DcMotor.class, "rightfront");
+        turret = hardwareMap.get(DcMotor.class, "turret");
+        cannon = hardwareMap.get(DcMotor.class, "cannon");
+        valve = hardwareMap.get(DcMotor.class, "valve");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
-        leftFront.setDirection(DcMotor.Direction.REVERSE);
-        leftback.setDirection(DcMotor.Direction.REVERSE);
-        rightfront.setDirection(DcMotor.Direction.FORWARD);
-        rightback.setDirection(DcMotor.Direction.FORWARD);
-
-        stateMachines = new StateMachines(this);
-
+        leftFront.setDirection(DcMotor.Direction.FORWARD);
+        leftback.setDirection(DcMotor.Direction.FORWARD);
+        rightfront.setDirection(DcMotor.Direction.REVERSE);
+        rightback.setDirection(DcMotor.Direction.REVERSE);
+        turret.setDirection(DcMotor.Direction.FORWARD);
+        turret.setDirection(DcMotorSimple.Direction.FORWARD);
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
-        telemetry.update();
     }
 
     /*
@@ -112,11 +114,46 @@ public class teleop extends OpMode
      */
     @Override
     public void loop() {
-        stateMachines.run();
         // Setup a variable for each drive wheel to save power level for telemetry
         double leftPower;
         double rightPower;
 
+        if (gamepad1.right_bumper)
+        {
+            turret.setPower(-0.3);
+        }
+        else if (gamepad1.left_bumper)
+        {
+            turret.setPower(0.3);
+        }
+        else
+        {
+            turret.setPower(0);
+        }
+    if (gamepad1.dpad_up)
+    {
+        cannon.setPower(-0.3);
+    }
+    else if (gamepad1.dpad_down)
+    {
+        cannon.setPower(0.3);
+    }
+    else{
+        cannon.setPower(0);
+    }
+
+        if (gamepad1.right_trigger > 0.1)
+        {
+            valve.setPower(1);
+        }
+        else if(gamepad1.left_trigger > 0.1)
+        {
+            valve.setPower(-1);
+        }
+        else
+        {
+            valve.setPower(0);
+        }
         // Choose to drive using either Tank Mode, or POV Mode
         // Comment out the method that's not used.  The default below is POV.
 
@@ -134,18 +171,13 @@ public class teleop extends OpMode
 
         // Send calculated power to wheels
         leftFront.setPower(leftPower);
-        leftback.setPower(leftPower);
+        leftFront.setPower(leftPower);
         rightfront.setPower(rightPower);
         rightback.setPower(rightPower);
-
+        //gkjgkj
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
-        telemetry.addData("Launch State", stateMachines.launchState);
-        telemetry.addData("Load State", stateMachines.loadState);
-        telemetry.addData("Drive State", stateMachines.driveState);
-        telemetry.addData("Aim State", stateMachines.aimState);
-        telemetry.update();
     }
 
     /*
