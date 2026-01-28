@@ -66,7 +66,7 @@ public class teleop extends OpMode
     private double cannonPower;
     private double cannonPos;
     private PController pController;
-    private double kP = 0.1;
+    private double kP = 0.04;
     private double cannonTargetPoint = 0;
     /*
      * Code to run ONCE when the driver hits INIT
@@ -93,6 +93,7 @@ public class teleop extends OpMode
         leftback.setDirection(DcMotor.Direction.FORWARD);
         rightfront.setDirection(DcMotor.Direction.REVERSE);
         rightback.setDirection(DcMotor.Direction.REVERSE);
+        cannon.setDirection(DcMotor.Direction.REVERSE);
         turret.setDirection(DcMotor.Direction.FORWARD);
         turret.setDirection(DcMotorSimple.Direction.FORWARD);
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -145,12 +146,12 @@ public class teleop extends OpMode
         }
     if (gamepad1.dpad_up)
     {
-        cannonTargetPoint += 10;
+         cannonTargetPoint += 7;
         pController.setTargetPoint(cannonTargetPoint);
     }
     else if (gamepad1.dpad_down)
     {
-        cannonTargetPoint -= 10;
+         cannonTargetPoint -= 7;
         pController.setTargetPoint(cannonTargetPoint);
     }
     else{
@@ -161,10 +162,7 @@ public class teleop extends OpMode
         {
             valve.setPower(1);
         }
-        else if(gamepad1.left_trigger > 0.1)
-        {
-            valve.setPower(-1);
-        }
+
         else
         {
             valve.setPower(0);

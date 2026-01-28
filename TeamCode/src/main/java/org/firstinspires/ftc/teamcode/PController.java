@@ -4,9 +4,9 @@ public class PController {
     private double pError;
     private double targetPoint;
 
-    public PController (double kP, double targetPoint){
-        kP = this.kP;
-        targetPoint = this.targetPoint;
+    public PController (double p, double target){
+        kP = p;
+        targetPoint = target;
     }
 
     public double updatePController(double currPosition)
@@ -19,9 +19,9 @@ public class PController {
     {
         return targetPoint;
     }
-    public void setTargetPoint(double targetPoint)
+    public void setTargetPoint(double target)
     {
-        targetPoint = this.targetPoint;
+        targetPoint = target;
 
     }
 
